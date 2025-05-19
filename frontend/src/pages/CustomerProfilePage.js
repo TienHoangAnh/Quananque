@@ -52,7 +52,7 @@ const CustomerProfilePage = () => {
     } else {
       fetchProfile();
     }
-  }, [customerInfo, authLoading, navigate]);
+  }, [customerInfo, authLoading, navigate, setCustomerInfo]);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
