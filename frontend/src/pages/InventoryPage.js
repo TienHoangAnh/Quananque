@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { Table, Button, Badge, Modal, Form, Row, Col, Alert, Nav, Tab } from 'react-bootstrap';
 import { 
   getInventory, 
-  getInventoryItem, 
   createInventoryItem, 
   updateInventoryItem, 
   deleteInventoryItem,

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Row, Col, Card, Table, Form, Button, Alert } from 'react-bootstrap';
+import { Row, Col, Card, Table, Form, Alert } from 'react-bootstrap';
 import Layout from '../components/Layout';
 import { getTodayStats, getRevenueStats, getTopItems, getProfitStats } from '../utils/api';
 

@@ -13,49 +13,35 @@ const CustomerDashboardPage = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Kiểm tra đăng nhập
+    const fetchOrders = async () => {
+      try {
+        console.log('Đang lấy danh sách đơn hàng cho khách hàng:', customerInfo?.name);
+        const customerToken = localStorage.getItem('customerToken');
+        if (!customerToken) {
+          setError('Phiên làm việc hết hạn, vui lòng đăng nhập lại');
+          setLoading(false);
+          return;
+        }
+        const res = await getCustomerOrders();
+        setOrders(res.data);
+        setLoading(false);
+      } catch (error) {
+        if (error.response && error.response.status === 401) {
+          setError('Phiên làm việc hết hạn, vui lòng đăng nhập lại');
+        } else {
+          setError('Không thể tải danh sách đơn hàng');
+        }
+        setLoading(false);
+      }
+    };
     if (!authLoading && !customerInfo) {
       navigate('/customer/login');
       return;
     }
-
     if (customerInfo) {
       fetchOrders();
     }
   }, [customerInfo, authLoading, navigate]);
-
-  const fetchOrders = async () => {
-    try {
-      console.log('Đang lấy danh sách đơn hàng cho khách hàng:', customerInfo.name);
-      
-      // Kiểm tra xem có customerToken không
-      const customerToken = localStorage.getItem('customerToken');
-      if (!customerToken) {
-        console.error('Không tìm thấy customerToken trong localStorage');
-        setError('Phiên làm việc hết hạn, vui lòng đăng nhập lại');
-        setLoading(false);
-        return;
-      }
-      
-      console.log('Gửi yêu cầu API getCustomerOrders với customerToken');
-      const res = await getCustomerOrders();
-      console.log('Kết quả API đơn hàng:', res.data);
-      
-      setOrders(res.data);
-      setLoading(false);
-    } catch (error) {
-      console.error('Lỗi lấy danh sách đơn hàng:', error);
-      
-      // Kiểm tra lỗi xác thực
-      if (error.response && error.response.status === 401) {
-        setError('Phiên làm việc hết hạn, vui lòng đăng nhập lại');
-      } else {
-        setError('Không thể tải danh sách đơn hàng');
-      }
-      
-      setLoading(false);
-    }
-  };
 
   // Rendering helpers
   const renderOrderStatus = (status) => {

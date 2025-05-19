@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { Card, Row, Col, Form, Button, ListGroup, Badge, Alert, InputGroup } from 'react-bootstrap';
+import { Card, Row, Col, Form, Button, ListGroup, Badge, Alert } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { getMenuItems, createOrder } from '../utils/api';
 import { CustomerContext } from '../context/CustomerContext';

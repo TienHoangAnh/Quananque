@@ -21,13 +21,26 @@ const CustomerProfilePage = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Kiểm tra đăng nhập
+    const fetchProfile = async () => {
+      try {
+        const res = await getCustomerProfile();
+        const data = res.data;
+        setFormData(prevState => ({
+          ...prevState,
+          name: data.name || '',
+          email: data.email || '',
+          phone: data.phone || '',
+          address: data.address || ''
+        }));
+        setCustomerInfo(data);
+      } catch (error) {
+        setError('Không thể tải thông tin hồ sơ');
+      }
+    };
     if (!authLoading && !customerInfo) {
       navigate('/customer/login');
       return;
     }
-
-    // Nếu đã có thông tin khách hàng, điền vào form
     if (customerInfo) {
       setFormData(prevState => ({
         ...prevState,
@@ -37,30 +50,9 @@ const CustomerProfilePage = () => {
         address: customerInfo.address || ''
       }));
     } else {
-      // Nếu chưa có thông tin, lấy từ API
       fetchProfile();
     }
   }, [customerInfo, authLoading, navigate]);
-
-  const fetchProfile = async () => {
-    try {
-      const res = await getCustomerProfile();
-      const data = res.data;
-      
-      setFormData(prevState => ({
-        ...prevState,
-        name: data.name || '',
-        email: data.email || '',
-        phone: data.phone || '',
-        address: data.address || ''
-      }));
-      
-      setCustomerInfo(data);
-    } catch (error) {
-      console.error('Lỗi lấy thông tin hồ sơ:', error);
-      setError('Không thể tải thông tin hồ sơ');
-    }
-  };
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
