@@ -15,7 +15,7 @@ app.use(express.urlencoded({ extended: false }));
 
 // Cấu hình CORS chi tiết hơn
 app.use(cors({
-  origin: ['http://localhost:3000', 'http://127.0.0.1:3000'],
+  origin: ['http://localhost:3000', 'http://127.0.0.1:3000', 'https://quananque.netlify.app'],
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   credentials: true
 }));
